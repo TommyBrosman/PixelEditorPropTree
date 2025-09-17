@@ -1,11 +1,12 @@
 // Create store context
 import { createContext } from 'react';
-import type { AppStore } from './Store';
-
-export const StoreContext = createContext<AppStore>({} as AppStore);
-export const StoreProvider = StoreContext.Provider;
 
 // Create hook to consume context in easy way
 import { useContext } from 'react';
+import { PixelEditorSchema } from '../model/Model';
+import { PropTreeNode } from '@fluid-experimental/tree-react-api';
 
-export const useAppStore = (): AppStore => useContext(StoreContext);
+export const StoreContext = createContext<PropTreeNode<PixelEditorSchema>>({} as PropTreeNode<PixelEditorSchema>);
+export const StoreProvider = StoreContext.Provider;
+
+export const useAppStore = (): PropTreeNode<PixelEditorSchema> => useContext(StoreContext);

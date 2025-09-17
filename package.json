@@ -5,20 +5,6 @@
 	"engines": {
 		"node": ">=20.0.0"
 	},
-	"dependencies": {
-		"@fluidframework/tinylicious-client": "^2.3.0",
-		"@fluidframework/tree": "^2.3.0",
-		"@reduxjs/toolkit": "^2.2.5",
-		"@types/node": "^16.18.97",
-		"@types/react": "^18.3.3",
-		"@types/react-dom": "^18.3.0",
-		"fluid-framework": "^2.3.0",
-		"mobx-react-lite": "^4.0.7",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"typescript": "~5.4.5",
-		"web-vitals": "^2.1.4"
-	},
 	"scripts": {
 		"build": "webpack --env prod",
 		"build:dev": "webpack",
@@ -28,26 +14,22 @@
 		"test": "start-server-and-test start:server 7070 test:mocha",
 		"test:mocha": "mocha"
 	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
+	"dependencies": {
+		"@fluidframework/tinylicious-client": "2.61.0-355781",
+		"@fluidframework/tree": "2.61.0-355781",
+		"@fluid-experimental/tree-react-api": "2.61.0-355781",
+		"@reduxjs/toolkit": "^2.2.5",
+		"@types/node": "^16.18.97",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"fluid-framework": "2.61.0-355781",
+		"mobx-react-lite": "^4.0.7",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"typescript": "~5.4.5",
+		"web-vitals": "^2.1.4"
 	},
 	"devDependencies": {
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@biomejs/biome": "1.8.0",
 		"@testing-library/react": "^16.0.0",
 		"@testing-library/user-event": "^14.5.2",
@@ -70,5 +52,23 @@
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^4.15.1"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	}
 }
