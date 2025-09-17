@@ -21,11 +21,17 @@ export const Grid = () => {
 			}
 
 			const onClickCell = () => {
+				const oldValue = node.board.get(getKey(x, y));
+
+				if (oldValue === undefined) {
+					throw new Error(`Cell at ${x},${y} is not defined`);
+				}
+
 				// Toggle the color between white and black
 				node.setCell(
 					x,
 					y,
-					1 - value
+					1 - oldValue
 				);
 			}
 
