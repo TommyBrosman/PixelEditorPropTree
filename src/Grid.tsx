@@ -4,31 +4,31 @@ import { boardHeight, boardWidth } from './model/InitialItemBoard';
 import { Cell } from './Cell';
 import { useAppStore } from './store/Hooks';
 import { usePropTreeNode } from '@fluid-experimental/tree-react-api';
-import { getKey } from './model/Model';
+import { getKey, type PixelEditorSchema } from './model/Model';
 
 export const Grid = () => {
 	const store = useAppStore();
 
 	// Populate the board
-	const items = usePropTreeNode(store, (node) => {
-		return node !== undefined ? [...Array(boardWidth * boardHeight)].map((_, i) => {
+	const items = usePropTreeNode(store, (pixelEditor: PixelEditorSchema) => {
+		return pixelEditor !== undefined ? [...Array(boardWidth * boardHeight)].map((_, i) => {
 			const x = i % boardWidth;
 			const y = Math.floor(i / boardWidth);
-			const value: number | undefined = node.board.get(getKey(x, y));
+			const value: number | undefined = pixelEditor.board.get(getKey(x, y));
 
 			if (value === undefined) {
 				throw new Error(`Cell at ${x},${y} is not defined`);
 			}
 
 			const onClickCell = () => {
-				const oldValue = node.board.get(getKey(x, y));
+				const oldValue: number | undefined = pixelEditor.board.get(getKey(x, y));
 
 				if (oldValue === undefined) {
 					throw new Error(`Cell at ${x},${y} is not defined`);
 				}
 
 				// Toggle the color between white and black
-				node.setCell(
+				pixelEditor.setCell(
 					x,
 					y,
 					1 - oldValue
