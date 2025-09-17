@@ -7,9 +7,11 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import Grid from "./Grid";
 import { boardHeight, boardWidth, initialItemBoard } from "./model/InitialItemBoard";
 import { setupStore } from "./store/Store";
-import type { PixelEditorSchema, SharedTreeConnection } from "./model/Model";
-import type { TreeView } from "fluid-framework";
+import { PixelEditorSchema, type SharedTreeConnection } from "./model/Model";
+import { TreeViewConfiguration, type TreeView } from "fluid-framework";
 import { StoreContext } from "./store/Hooks";
+import { independentView } from "@fluidframework/tree/alpha";
+import { createIdCompressor } from "@fluidframework/id-compressor/legacy";
 
 /**
  * Wait for the thunk that connects to Fluid.
@@ -35,12 +37,36 @@ const countCellsInModel = (sharedTreeConnection: SharedTreeConnection, kind: 'bl
 	return cellValues.reduce((total, current) => total + (current === kindValue ? 1 : 0));
 }
 
+/**
+ * Build a tree without connecting to a service backend and populate it with the specified data.
+ * @param itemBoard The board data to populate.
+ * @returns The populated tree view.
+ */
+const mockPixelEditorTreeView = (itemBoard: number[][]): TreeView<typeof PixelEditorSchema> => {
+	const config = new TreeViewConfiguration({ schema: PixelEditorSchema, enableSchemaValidation: true });
+	const view = independentView(config, { idCompressor: createIdCompressor() });
+	view.initialize(new PixelEditorSchema({
+		board: new Map<string, number>()
+	}));
+
+	for (let y = 0; y < itemBoard.length; y++) {
+		const row = itemBoard[y];
+		for (let x = 0; x < row.length; x++) {
+			const cell = row[x];
+			view.root.setCell(x, y, cell);
+		}
+	}
+
+	return view;
+}
+
 describe("Tests for Grid", () => {
 	/**
 	 * Visual test for the Grid component. Ignores Fluid and tells the app that the board is already loaded.
 	 */
 	it("Displays an 8x8 board", async (): Promise<void> => {
-		const store = await setupStore({ itemBoard: initialItemBoard, isLoaded: true });
+		const treeView = mockPixelEditorTreeView(initialItemBoard);
+		const store = await setupStore({ treeView });
 		const { container } = render(
 			<StoreContext.Provider value={store}>
 				<Grid/>
