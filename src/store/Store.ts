@@ -1,27 +1,25 @@
 import { type PixelEditorSchema, type SharedTreeConnection, start } from "../model/Model";
-import type { AppState } from "../State";
 import { type PropTreeNode, toPropTreeNode } from "@fluid-experimental/tree-react-api";
 
 /**
  * Facade method to setting up the store.
- * @param preloadedState Preloaded state for testing.
- * @param sharedTreeConnection Contains the Shared Tree TreeView when connected. Used in tests.
+ * @param sharedTreeConnection Contains the Shared Tree TreeView when connected. Specified by tests in order to inject preloaded
+ * state without connecting to a service backend.
  * @returns The composed store.
  */
-export async function setupStore(preloadedState?: AppState, sharedTreeConnection?: SharedTreeConnection): Promise<PropTreeNode<PixelEditorSchema>> {
-	// If preloaded state is provided, create a `PixelEditorSchema` instance and use it to populate the board
-	if (preloadedState !== undefined) {
-		if (preloadedState.treeView === undefined) {
-			throw new Error("If preloadedState is provided, treeView must be defined.");
-		}
-		return toPropTreeNode(preloadedState.treeView.root);
-	}
-
-	if (sharedTreeConnection === undefined) {
-		throw new Error("Expected sharedTreeConnection to be defined when preloadedState is not provided.");
+export async function setupStore(sharedTreeConnection: SharedTreeConnection): Promise<PropTreeNode<PixelEditorSchema>> {
+	// If preloaded state is provided or if we area already connected to a tree, create a `PixelEditorSchema` instance and
+	// use it to populate the board.
+	if (sharedTreeConnection.pixelEditorTreeView !== undefined) {
+		const pixelEditor = toPropTreeNode(sharedTreeConnection.pixelEditorTreeView.root);
+		return pixelEditor;
 	}
 
 	// Create or join a session
-	const pixelEditorTreeView = sharedTreeConnection.pixelEditorTreeView ?? await start();
-	return toPropTreeNode(pixelEditorTreeView.root);
+	const pixelEditorTreeView = await start();
+	const pixelEditor = toPropTreeNode(pixelEditorTreeView.root);
+
+	// Side-effect: some tests keep track of whether we are connected or not, so this method needs to update the connection object.
+	sharedTreeConnection.pixelEditorTreeView = pixelEditorTreeView;
+	return pixelEditor;
 }

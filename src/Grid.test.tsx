@@ -7,14 +7,15 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import Grid from "./Grid";
 import { boardHeight, boardWidth, initialItemBoard } from "./model/InitialItemBoard";
 import { setupStore } from "./store/Store";
-import { PixelEditorSchema, type SharedTreeConnection } from "./model/Model";
+import { createEmptyConnection, PixelEditorSchema, type SharedTreeConnection } from "./model/Model";
 import { TreeViewConfiguration, type TreeView } from "fluid-framework";
 import { StoreContext } from "./store/Hooks";
 import { independentView } from "@fluidframework/tree/alpha";
-import { createIdCompressor } from "@fluidframework/id-compressor/legacy";
 
 /**
  * Wait for the thunk that connects to Fluid.
+ * @remarks
+ * We are relying a side-effect of `setupStore` to populate the connection object.
  * @param sharedTreeConnection The connection injected into the store.
  * @returns The promise to wait on.
  */
@@ -44,7 +45,7 @@ const countCellsInModel = (sharedTreeConnection: SharedTreeConnection, kind: 'bl
  */
 const mockPixelEditorTreeView = (itemBoard: number[][]): TreeView<typeof PixelEditorSchema> => {
 	const config = new TreeViewConfiguration({ schema: PixelEditorSchema, enableSchemaValidation: true });
-	const view = independentView(config, { idCompressor: createIdCompressor() });
+	const view = independentView(config, {});
 	view.initialize(new PixelEditorSchema({
 		board: new Map<string, number>()
 	}));
@@ -66,7 +67,8 @@ describe("Tests for Grid", () => {
 	 */
 	it("Displays an 8x8 board", async (): Promise<void> => {
 		const treeView = mockPixelEditorTreeView(initialItemBoard);
-		const store = await setupStore({ treeView });
+		const sharedTreeConnection: SharedTreeConnection = { pixelEditorTreeView: treeView };
+		const store = await setupStore(sharedTreeConnection);
 		const { container } = render(
 			<StoreContext.Provider value={store}>
 				<Grid/>
@@ -80,10 +82,8 @@ describe("Tests for Grid", () => {
 	 * Toggles a cell via the UI, then ensures that the visual state is consistent.
 	 */
 	it("Toggles a cell", async (): Promise<void> => {
-		const sharedTreeConnection: SharedTreeConnection = { pixelEditorTreeView: undefined };
-		const store = await setupStore(
-			undefined,
-			sharedTreeConnection);
+		const sharedTreeConnection: SharedTreeConnection = createEmptyConnection();
+		const store = await setupStore(sharedTreeConnection);
 		const { container } = render(
 			<StoreContext.Provider value={store}>
 				<Grid/>
@@ -105,10 +105,8 @@ describe("Tests for Grid", () => {
 	 * Toggles a cell and asserts that the backing tree has changed.
 	 */
 	it("Toggling a cell in the UI sets the corresponding cell in the backing Fluid Tree DDS", async (): Promise<void> => {
-		const sharedTreeConnection: SharedTreeConnection = { pixelEditorTreeView: undefined };
-		const store = await setupStore(
-			undefined,
-			sharedTreeConnection);
+		const sharedTreeConnection: SharedTreeConnection = createEmptyConnection();
+		const store = await setupStore(sharedTreeConnection);
 		const { container } = render(
 			<StoreContext.Provider value={store}>
 				<Grid/>

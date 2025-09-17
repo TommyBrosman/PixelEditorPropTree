@@ -5,12 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { setupStore } from './store/Store';
 import { StoreContext } from './store/Hooks';
+import { createEmptyConnection } from './model/Model';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
 
-setupStore().then((store) =>
+setupStore(createEmptyConnection()).then((store) =>
 	root.render(
 		<StoreContext.Provider value={store}>
 			<React.StrictMode>

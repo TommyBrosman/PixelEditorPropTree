@@ -128,3 +128,8 @@ export const getKey = (x: number, y: number) => `${x},${y}`;
 export interface SharedTreeConnection {
 	pixelEditorTreeView: TreeView<typeof PixelEditorSchema> | undefined;
 }
+
+/**
+ * Creates an empty connection. Simplifies tests and initial app setup.
+ */
+export const createEmptyConnection: () => SharedTreeConnection = () => ({ pixelEditorTreeView: undefined });
