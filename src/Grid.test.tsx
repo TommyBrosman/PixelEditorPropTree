@@ -50,14 +50,7 @@ const mockPixelEditorTreeView = (itemBoard: number[][]): TreeView<typeof PixelEd
 		board: new Map<string, number>()
 	}));
 
-	for (let y = 0; y < itemBoard.length; y++) {
-		const row = itemBoard[y];
-		for (let x = 0; x < row.length; x++) {
-			const cell = row[x];
-			view.root.setCell(x, y, cell);
-		}
-	}
-
+	view.root.setBoardFromNestedArray(itemBoard);
 	return view;
 }
 
