@@ -15,14 +15,14 @@
 		"test:mocha": "mocha"
 	},
 	"dependencies": {
-		"@fluidframework/tinylicious-client": "2.61.0-355781",
-		"@fluidframework/tree": "2.61.0-355781",
-		"@fluid-experimental/tree-react-api": "2.61.0-355781",
+		"@fluidframework/tinylicious-client": "2.61.0-355990",
+		"@fluidframework/tree": "2.61.0-355990",
+		"@fluid-experimental/tree-react-api": "2.61.0-355990",
 		"@reduxjs/toolkit": "^2.2.5",
 		"@types/node": "^16.18.97",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
-		"fluid-framework": "2.61.0-355781",
+		"fluid-framework": "2.61.0-355990",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"typescript": "~5.4.5",
