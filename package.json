@@ -1,5 +1,5 @@
 {
-	"name": "pixel-editor",
+	"name": "pixel-editor-prop-tree",
 	"version": "0.1.0",
 	"private": true,
 	"engines": {
@@ -18,7 +18,6 @@
 		"@fluidframework/tinylicious-client": "2.61.0-355990",
 		"@fluidframework/tree": "2.61.0-355990",
 		"@fluid-experimental/tree-react-api": "2.61.0-355990",
-		"@reduxjs/toolkit": "^2.2.5",
 		"@types/node": "^16.18.97",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
@@ -52,23 +51,5 @@
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^4.15.1"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
 	}
 }

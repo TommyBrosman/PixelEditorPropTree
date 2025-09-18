@@ -10,7 +10,9 @@ const containerSchema = {
 // The string passed to the SchemaFactory should be unique
 const factory: SchemaFactory = new SchemaFactory("PixelEditorSample");
 
-// Defines the root schema.
+/**
+ * The root schema for the application.
+ */
 export class PixelEditorSchema extends factory.object("PixelEditor-1.0.0", {
     board: factory.map(factory.number),
 }) {

@@ -1,10 +1,10 @@
-import React from 'react';
-import './Grid.css';
-import { boardHeight, boardWidth } from './model/InitialItemBoard';
-import { Cell } from './Cell';
-import { useAppStore } from './store/Hooks';
-import { usePropTreeNode } from '@fluid-experimental/tree-react-api';
-import { getKey, type PixelEditorSchema } from './model/Model';
+import * as React from "react";
+import "./Grid.css";
+import { boardHeight, boardWidth } from "./model/InitialItemBoard";
+import { Cell } from "./Cell";
+import { useAppStore } from "./store/Hooks";
+import { usePropTreeNode } from "@fluid-experimental/tree-react-api";
+import { getKey, type PixelEditorSchema } from "./model/Model";
 
 export const Grid = () => {
 	const store = useAppStore();
@@ -33,10 +33,10 @@ export const Grid = () => {
 					y,
 					1 - oldValue
 				);
-			}
+			};
 
 			const key = `${x},${y}`;
-			return <Cell key={key} onClickCell={onClickCell} value={value}/>
+			return <Cell key={key} onClickCell={onClickCell} value={value}/>;
 		}) : [];
 	});
 

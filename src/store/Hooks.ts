@@ -1,10 +1,6 @@
-// Create store context
-import { createContext } from 'react';
-
-// Create hook to consume context in easy way
-import { useContext } from 'react';
-import type { PixelEditorSchema } from '../model/Model';
-import type { PropTreeNode } from '@fluid-experimental/tree-react-api';
+import { createContext, useContext } from "react";
+import type { PixelEditorSchema } from "../model/Model";
+import type { PropTreeNode } from "@fluid-experimental/tree-react-api";
 
 export const StoreContext = createContext<PropTreeNode<PixelEditorSchema>>({} as PropTreeNode<PixelEditorSchema>);
 export const StoreProvider = StoreContext.Provider;

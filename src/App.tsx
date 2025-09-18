@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import Grid from './Grid';
+import * as React from "react";
+import "./App.css";
+import Grid from "./Grid";
 
 function App() {
 	return (
