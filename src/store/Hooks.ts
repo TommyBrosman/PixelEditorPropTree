@@ -1,8 +1,11 @@
 import { createContext, useContext } from "react";
 import type { PixelEditorSchema } from "../model/Model";
-import type { PropTreeNode } from "@fluid-experimental/tree-react-api";
+import { TreeView } from "fluid-framework";
 
-export const StoreContext = createContext<PropTreeNode<PixelEditorSchema>>({} as PropTreeNode<PixelEditorSchema>);
+export const StoreContext = createContext<TreeView<typeof PixelEditorSchema>>(
+  {} as TreeView<typeof PixelEditorSchema>
+);
 export const StoreProvider = StoreContext.Provider;
 
-export const useAppStore = (): PropTreeNode<PixelEditorSchema> => useContext(StoreContext);
+export const useAppStore = (): TreeView<typeof PixelEditorSchema> =>
+  useContext(StoreContext);
