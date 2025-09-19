@@ -3,13 +3,12 @@ import "./Grid.css";
 import { boardHeight, boardWidth } from "./model/InitialItemBoard";
 import { Cell } from "./Cell";
 import { useAppStore } from "./store/Hooks";
-import { PropTreeNode, TreeViewComponent, withTreeObservations } from "@fluid-experimental/tree-react-api";
+import { type PropTreeNode, TreeViewComponent, withTreeObservations } from "@fluid-experimental/tree-react-api";
 import { getKey, type PixelEditorSchema } from "./model/Model";
 
 export const Grid = () => {
 	const store = useAppStore();
-	const root = TreeViewComponent<typeof PixelEditorSchema>({ tree: {treeView: store}, ViewComponent: Inner });
-	return root;
+	return TreeViewComponent<typeof PixelEditorSchema>({ tree: {treeView: store}, ViewComponent: Inner });
 };
 
 export const Inner: React.FC<{root : PropTreeNode<PixelEditorSchema>}> = withTreeObservations(({ root }: { root: PixelEditorSchema }) => {
@@ -41,9 +40,11 @@ export const Inner: React.FC<{root : PropTreeNode<PixelEditorSchema>}> = withTre
 		return <Cell key={key} onClickCell={onClickCell} value={value} />;
 	}) : [];
 
-	return <div className="grid">
-		{items}
-	</div>;
+	return (
+		<div className="grid">
+			{items}
+		</div>
+	);
 });
 
 export default Grid;
